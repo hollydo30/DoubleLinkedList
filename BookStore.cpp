@@ -19,8 +19,8 @@ using std::cout, std::cin, std::endl;
 using std::string, std::to_string;
 using std::stringstream;
 
-	::CPSC131::DoublyLinkedList::DoublyLinkedList<Book> bookList;
-	int account_balance_ = 0;
+	//::CPSC131::DoublyLinkedList::DoublyLinkedList<Book> bookList;
+	//int account_balance_ = 0;
 //
 namespace CPSC131::BookStore
 {
@@ -35,7 +35,7 @@ namespace CPSC131::BookStore
 	void BookStore::adjustAccountBalance(int adjustment)
 	{
 		//	TODO: Your code here
-		account_balance_ = adjustment;
+		this->account_balance_ = adjustment;
 	}
 	
 	/**
@@ -44,7 +44,7 @@ namespace CPSC131::BookStore
 	int BookStore::getAccountBalance() const
 	{
 		//	TODO: Your code here
-		return account_balance_;
+		return this->account_balance_;
 		//return 0;
 	}
 	
@@ -58,9 +58,15 @@ namespace CPSC131::BookStore
 	DoublyLinkedList::DoublyLinkedList<Book>::Iterator BookStore::findBook(std::string isbn) const
 	{
 		//	TODO: Your code here
-		if(Book.isbn = isbn)
+		DoublyLinkedList::DoublyLinkedList<Book>::Iterator iter;
+		
+		while(iter.cursor_!= nullptr)
 		{
-		return DoublyLinkedList::DoublyLinkedList<Book>::Iterator();
+			if(iter.cursor_->getElement().isbn == isbn)
+			{
+			return iter;
+			}
+			++iter;
 		}
 		else
 		{
@@ -76,13 +82,13 @@ namespace CPSC131::BookStore
 	bool BookStore::bookExists(std::string isbn) const
 	{
 		//	TODO: Your code here
-		if(Book.isbn = isbn)
+		if( BookStore::findBook(isbn) == bookList.end())
 		{
-		return true;
+		return false;
 		}
 		else
 		{
-		return false;
+		return true;
 		}
 		//return false;
 	}
@@ -97,11 +103,11 @@ namespace CPSC131::BookStore
 		//	TODO: Your code here
 		if(BookStore::bookExists(isbn))
 			{
-				for(size_t = i; i<bookList,size_, ++i)
+				for(size_t = i; i<this->bookList.size_, ++i)
 				{
-					iter++
+					iter++;
 				}
-				return *iter.quantity_;
+				return (iter.cursor_->getElement()).quantity;
 			}
 		else
 		{
@@ -117,21 +123,63 @@ namespace CPSC131::BookStore
 	Book& BookStore::getBook(std::string isbn) const
 	{
 		//	TODO: Your code here
+		DoublyLinkedList::DoublyLinkedList<Book>::Iterator iter;
 		if(BookStore::bookExists(isbn))
 			{
-				for(size_t = i; i<bookList,size_, ++i)
+				for(size_t i = 0; i<this->bookList.size_, ++i)
 				{
-					iter++
+					++iter;
 				}
-				return iter->getElement();
+				return (iter.cursor_)->getElement();
 			}
 		else
 		{
-		throw exception;
+		throw std::range_error;
 		}
 		//return *(new Book());
 	}
 	
+	
+	//////////////////////////////////
+	DoublyLinkedList::DoublyLinkedList<Book>::Iterator BookStore::findBook(Book& book) const
+	{
+		//	TODO: Your code here
+		DoublyLinkedList::DoublyLinkedList<Book>::Iterator iter;
+		
+		while(iter.cursor_!= nullptr)
+		{
+			if(iter.cursor_->getElement() == book)
+			{
+			return iter;
+			}
+			++iter;
+		}
+		else
+		{
+		return this->bookList.end();
+		}
+	}
+	
+	/////////////////////////////////
+		Book& BookStore::getBook(Book& book) const
+	{
+		//	TODO: Your code here
+		DoublyLinkedList::DoublyLinkedList<Book>::Iterator iter;
+		if(BookStore::bookExists(isbn))
+			{
+				for(size_t i = 0; i<this->bookList.size_, ++i)
+				{
+					++iter;
+				}
+				return (iter.cursor_)->getElement();
+			}
+		else
+		{
+		throw std::range_error;
+		}
+		//return *(new Book());
+	}
+	//////////////////////////////////
 	/**
 	 * Take a Book instance and add it to inventory
 	 * 
@@ -145,7 +193,8 @@ namespace CPSC131::BookStore
 	void BookStore::purchaseInventory(const Book& book)
 	{
 		//	TODO: Your code here
-		bookList.push_back(isbn);
+		this->bookList.push_back(book);
+		this->bookList.size_ = this->bookList.size_ + 1;
 	}
 	
 	/**
@@ -164,7 +213,7 @@ namespace CPSC131::BookStore
 	)
 	{
 		//	TODO: Your code here
-		bookList.push_back(title, author, isbn, price_cents, unit_count);
+		this->bookList.push_back(book(title, author, isbn, price_cents, unit_count);
 	}
 	
 	/**
@@ -181,9 +230,9 @@ namespace CPSC131::BookStore
 	void BookStore::printInventory() const
 	{
 		//	TODO: Your code here
-		cout<<"*** Book Store Inventory ***"<<endl;
-		cout<<""Book1", by Author1 [123] (5 in stock)"<<endl;
-		cout<<""Book1", by Author1 [123] (5 in stock)"<<endl;
+		std::cout<<"*** Book Store Inventory ***"<<std::endl;
+		std::cout<<""Book1", by Author1 [123] (5 in stock)"<<std::endl;
+		std::cout<<""Book1", by Author1 [123] (5 in stock)"<<std::endl;
 	}
 	
 	/**
@@ -199,8 +248,8 @@ namespace CPSC131::BookStore
 	void BookStore::sellToCustomer(std::string isbn, size_t price_cents, size_t quantity)
 	{
 		//	TODO: Your code here
-		BookStore::getBook(isbn).setCount -= quantiy;
-		BookStore::getBook(isbn).account_balance_ -= price_cents;
+		this->bookList.size_ -= quantiy;
+		this->account_balance_ -= price_cents;
 	}
 	
 	/**
@@ -216,14 +265,14 @@ namespace CPSC131::BookStore
 	void BookStore::sellToCustomer(Book& book, size_t price_cents, size_t quantity)
 	{
 		//	TODO: Your code here
-		if(quantity > BookStore::getBook(isbn).quantity_)
+		if(quantity > (this->getBook(book)).quantity)
 		{
 			throw std::range_error;
 		}
 		else
 		{
-			BookStore::getBook(isbn).setCount -= quantiy;
-			BookStore::getBook(isbn).account_balance_ -= price_cents;
+			this->getBook(book).quantity -= quantiy;
+			this->account_balance_-= price_cents;
 		}
 	}
 }
