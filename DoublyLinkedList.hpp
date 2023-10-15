@@ -60,29 +60,49 @@ namespace CPSC131
 						
 						/// CTORS
 						Node() : prev_(nullptr), next_(nullptr) {}
-						Node(T element) {}
-						Node(T element, Node* prev, Node* next) {}
+						Node(T element)
+						{
+							 elements_ = element;
+						}
+						Node(T element, Node* prev, Node* next) 
+						{
+							prev_ = prev;
+							next_ = next;
+							element_ = element;
+						}
 						
 						/// Set the pointer to the previous element
-						void setPrevious(Node* prev) {}
+						void setPrevious(Node* prev)
+						{
+							prev_ = prev;
+						}
 						
 						/// Set the pointer to the previous element
-						void setPrev(Node* prev) {}
+						void setPrev(Node* prev)
+						{
+							prev_ = prev;
+						}
 						
 						/// Get a pointer to the previous element
-						Node* getPrevious() { return nullptr; }
+						Node* getPrevious() { return prev_; }
 						
 						/// Get a pointer to the previous element
-						Node* getPrev() { return nullptr; }
+						Node* getPrev() { return prev_; }
 						
 						/// Set the pointer to the next node
-						void setNext(Node* next) {}
+						void setNext(Node* next)
+						{
+							next_ = next;
+						}
 						
 						/// Get a pointer to the next node
-						Node* getNext() { return nullptr; }
+						Node* getNext() { return next_; }
 						
 						/// Set the element this node holds
-						void setElement(T element) {}
+						void setElement(T element) 
+						{
+							element_ = element;
+						}
 						
 						/// Get the element this node holds
 						///	YOUR WELCOME
@@ -130,7 +150,8 @@ namespace CPSC131
 						{
 							//	TODO: Your code here
 							
-							return nullptr;
+							
+							return this->head_;
 						}
 						
 						///	Get a node pointer representing "end" (aka "depleted"). Probably want to just use nullptr.
@@ -138,7 +159,7 @@ namespace CPSC131
 						{
 							//	TODO: Your code here
 							
-							return nullptr;
+							return this->tail_->next_;
 						}
 						
 						///	Get the node to which this iterator is currently pointing
@@ -146,7 +167,7 @@ namespace CPSC131
 						{
 							//	TODO: Your code here
 							
-							return nullptr;
+							return this->cursor_;
 						}
 						
 						/**
@@ -156,6 +177,9 @@ namespace CPSC131
 						Iterator& operator=(const Iterator& other)
 						{
 							//	TODO: Your code here
+							this->head_ = other.head_;
+							this->tail_ = other.tail_;
+							this->cursor_ = other.cursor_;
 							
 							return *this;
 						}
@@ -164,15 +188,31 @@ namespace CPSC131
 						bool operator==(const Iterator& other)
 						{
 							//	TODO: Your code here
+							if (this->head_ == other.head_ &&
+							this->tail_ == other.tail_ &&
+							this->cursor_ == other.cursor_)
+							{
+								return true
+							}
 							
-							return false;
+							else
+							{
+								return false;
+							}
 						}
 						///	Inequality comparison operator
 						bool operator!=(const Iterator& other)
 						{
 							//	TODO: Your code here
+							if (this == other)
+							{
+								return false;
+							}
 							
-							return false;
+							else
+							{
+								return true;
+							}
 						}
 						
 						/**
@@ -182,6 +222,7 @@ namespace CPSC131
 						Iterator& operator++()
 						{
 							//	TODO: Your code here
+							this->cursor_ = this->cursor_->getNext();
 							
 							return *this;
 						}
@@ -193,8 +234,10 @@ namespace CPSC131
 						Iterator operator++(int)
 						{
 							//	TODO: Your code here
+							Iterator cursor_2 = this->cursor_;
+							this->cursor_ = this->cursor_->getNext();
 							
-							return *this;
+							return *cursor_2;
 						}
 						
 						/**
@@ -204,6 +247,7 @@ namespace CPSC131
 						Iterator& operator--()
 						{
 							//	TODO: Your code here
+							this->cursor_ = this->cursor_->getPrev();
 							
 							return *this;
 						}
@@ -215,8 +259,10 @@ namespace CPSC131
 						Iterator operator--(int)
 						{
 							//	TODO: Your code here
+							Iterator cursor_2 = this->cursor_;
+							this->cursor_ = this->cursor_->getPrev();
 							
-							return *this;
+							return *cursor_2;
 						}
 						
 						/**
@@ -226,6 +272,10 @@ namespace CPSC131
 						Iterator operator +=(size_t add)
 						{
 							//	TODO: Your code here
+							for (size_t i = 0; i<add; ++i)
+							{
+								this->cursor_ = this->cursor_->getNext();
+							}
 							
 							return *this;
 						}
@@ -236,6 +286,10 @@ namespace CPSC131
 						Iterator operator -=(size_t add)
 						{
 							//	TODO: Your code here
+							for (size_t i = 0; i<add; ++i)
+							{
+								this->cursor_ = this->cursor_->getPrev();
+							}
 							
 							return *this;
 						}
@@ -246,6 +300,20 @@ namespace CPSC131
 						Iterator operator +=(int add)
 						{
 							//	TODO: Your code here
+							if (add>=0)
+							{
+								for (int i = 0; i<add; ++i)
+								{
+								this->cursor_ = this->cursor_->getNext();
+								}
+							}
+							else
+							{
+								for (int i = add; i<0; ++i)
+								{
+								this->cursor_ = this->cursor_->getNext();
+								}
+							}
 							
 							return *this;
 						}
@@ -256,6 +324,21 @@ namespace CPSC131
 						Iterator operator -=(int subtract)
 						{
 							//	TODO: Your code here
+							if (subtract>=0)
+							{
+								for (int i = 0; i<subtract; ++i)
+								{
+								this->cursor_ = this->cursor_->getPrev();
+								}
+							}
+							else
+							{
+								for (int i = subtract; i<0; ++i)
+								{
+								this->cursor_ = this->cursor_->getPrev();
+								}
+							}
+							
 							
 							return *this;
 						}
@@ -267,7 +350,7 @@ namespace CPSC131
 						{
 							//	TODO: Your code here
 							
-							return *(new T());
+							return this->cursor_->getElement();
 						}
 					
 					private:
@@ -292,18 +375,32 @@ namespace CPSC131
 				DoublyLinkedList()
 				{
 					//	TODO: Your code here
+					head_ = nullptr;
+					tail_ = nullptr;
+					size_ = 0;
 				}
 				
 				///	Copy Constructor
 				DoublyLinkedList(DoublyLinkedList& other)
 				{
 					//	TODO: Your code here
+					this->head_ = other.head_;
+					this->tail_ = other.tail_;
+					this->size_ = 0;
 				}
 				
 				/// DTOR
 				~DoublyLinkedList()
 				{
 					//	TODO: Your code here
+					while (size_ != 0)
+					{
+						Node* temp = head_;
+						head_= head->getNext();
+						delete temp;
+						temp = nullptr;
+						--size;
+					}
 				}
 				
 				/**
@@ -314,6 +411,15 @@ namespace CPSC131
 				void assign(size_t count, const T& value)
 				{
 					//	TODO: Your code here
+					clear();
+					size_ = count;
+					while (count!=0)
+					{
+						T* current = head_;
+						current->setElement(value);
+						current = current->getNext();
+						--count;
+					}
 				}
 				
 				/**
@@ -335,6 +441,14 @@ namespace CPSC131
 				void assign(Iterator first, Iterator last)
 				{
 					//	TODO: Your code here
+					clear();
+					Node* current = head_;
+					
+					while (first != last)
+					{
+					current->setElement(first.cursor_->getElement());
+					current = current->getnext();
+					++first;
 				}
 				
 				/// Return a pointer to the head node, if any
@@ -342,7 +456,7 @@ namespace CPSC131
 				{
 					//	TODO: Your code here
 					
-					return nullptr;
+					return head_;
 				}
 				
 				/// Return a pointer to the tail node, if any
@@ -350,7 +464,7 @@ namespace CPSC131
 				{
 					//	TODO: Your code here
 					
-					return nullptr;
+					return tail_;
 				}
 				
 				/**
@@ -359,8 +473,13 @@ namespace CPSC131
 				Iterator begin() const
 				{
 					//	TODO: Your code here
+					Iterator iter;
 					
-					return Iterator();
+					iter.head_ = this->head_;
+					iter.tail_ = this->tail_;
+					iter.cursor_ = this->head_;
+					
+					return iter;
 				}
 				
 				/**
@@ -369,8 +488,13 @@ namespace CPSC131
 				Iterator last() const
 				{
 					//	TODO: Your code here
+					Iterator iter;
 					
-					return Iterator();
+					iter.head_ = this->head_;
+					iter.tail_ = this->tail_;
+					iter.cursor_ = this->tail_;
+					
+					return iter;
 				}
 				
 				/**
@@ -382,8 +506,13 @@ namespace CPSC131
 				Iterator end() const
 				{
 					//	TODO: Your code here
+					Iterator iter;
 					
-					return Iterator();
+					iter.head_ = this->head_;
+					iter.tail_ = this->tail_;
+					iter.cursor_ = this->tail_->getNext();
+					
+					return iter;
 				}
 				
 				/**
@@ -392,8 +521,14 @@ namespace CPSC131
 				bool empty() const
 				{
 					//	TODO: Your code here
-					
-					return false;
+					if(size==0)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}	
 				}
 				
 				/**
@@ -405,7 +540,7 @@ namespace CPSC131
 				{
 					//	TODO: Your code here
 					
-					return 0;
+					return size_;
 				}
 				
 				/**
@@ -415,6 +550,14 @@ namespace CPSC131
 				void clear()
 				{
 					//	TODO: Your code here
+						while (size_ != 0)
+					{
+						Node* temp = head_;
+						head_= head->getNext();
+						delete temp;
+						temp = nullptr;
+						--size;
+					}
 				}
 				
 				/**
@@ -433,8 +576,29 @@ namespace CPSC131
 				Iterator insert_after(Iterator pos, const T& value)
 				{
 					//	TODO: Your code here
-					
-					//
+					if(size_==0)
+					{
+						head_=new Node(value);
+						tail_=head_;
+						size = 1;
+					}
+					else
+					{
+						if(pos == this->end())
+						{
+							this->tail_->setNext(new Node(value));
+							tail_ = tail_getNext();
+							tail_->setNext(nullptr);
+							++size;
+						}
+						else
+						{
+						Iterator cursor_2 = pos.cursor_->getNext();
+						pos.cursor_->setNext(new Node(value));
+						pos.cursor_->getNext()->setNext(cursor_2);
+						}
+					}
+					//????
 					return Iterator();
 				}
 				
@@ -451,6 +615,10 @@ namespace CPSC131
 				Iterator insert_after(size_t pos, const T& value)
 				{
 					//	TODO: Your code here
+					Iterator iter;
+					iter = iter + pos;
+					
+					insert_after(iter, value);
 					
 					return Iterator();
 				}
@@ -468,6 +636,10 @@ namespace CPSC131
 				{
 					//	TODO: Your code here
 					
+					Iterator iter2 = pos.cursor_->getNext();
+					iter->getPrev()->setNext(iter2);
+					delete pos;
+					pos = nullptr;
 					return Iterator();
 				}
 				
@@ -479,7 +651,7 @@ namespace CPSC131
 				Iterator push_after(Iterator pos, const T& value)
 				{
 					//	TODO: Your code here
-					
+						Iterator insert_after(size_t pos, const T& value)
 					//
 					return Iterator();
 				}
@@ -490,6 +662,11 @@ namespace CPSC131
 				void push_front(const T& value)
 				{
 					//	TODO: Your code here
+						Node* temp = new Node(value));
+						head_->setPrev(temp);
+						head_ = temp;
+						++size;
+					
 				}
 				
 				/**
@@ -500,7 +677,12 @@ namespace CPSC131
 				Iterator push_back(const T& value)
 				{
 					//	TODO: Your code here
-					
+						this->tail_->setNext(new Node(value));
+						Node* temp = tail_;
+						tail_ = tail_getNext();
+						tail_->setNext(nullptr);
+						tail_->setPrev(temp);
+						++size;
 					return Iterator();
 				}
 				
@@ -512,6 +694,12 @@ namespace CPSC131
 				void pop_front()
 				{
 					//	TODO: Your code here
+						this->head_->setPrev(new Node(value));
+						Node* temp = head_;
+						head_ = head_getPrev();
+						head_->setPrev(nullptr);
+						head_->setNext(temp);
+						++size;
 				}
 				
 				/**
@@ -522,6 +710,15 @@ namespace CPSC131
 				void pop_back()
 				{
 					//	TODO: Your code here
+						Node* temp = tail_;
+						
+						tail_ = tail_getPrev();
+						tail_->setNext(nullptr);
+						
+						delete temp;
+						temp = nullptr;
+						
+						--size;
 				}
 				
 				/**
@@ -532,8 +729,8 @@ namespace CPSC131
 				T& front()
 				{
 					//	TODO: Your code here
-					
-					return *(new T());
+					return head_->getElement();
+					//return *(new T());
 				}
 				
 				/**
@@ -544,8 +741,8 @@ namespace CPSC131
 				T& back()
 				{
 					//	TODO: Your code here
-					
-					return *(new T());
+					return tail_->getElement();
+					//return *(new T());
 				}
 				
 				/**
@@ -556,8 +753,12 @@ namespace CPSC131
 				T& at(size_t index)
 				{
 					//	TODO: Your code here
+					Iterator iter;
+					iter = iter + index;
 					
-					return *(new T());
+					return iter->getElement();
+					
+					//return *(new T());
 				}
 				
 				/**
@@ -573,6 +774,16 @@ namespace CPSC131
 				void reverse()
 				{
 					//	TODO: Your code here
+					DoublyLinkedList<T> list2 (size_, T);
+					Iterator iter;
+					iter.cursor_ = head_;
+					list2.size_ = size_;
+					while (iter!= end())
+					{
+						list2.head_->setElement(iter.cursor_->getElement());
+						list2.head_ = list2.head_->getNext();
+						++iter;
+					}
 				}
 				
 				/**
@@ -606,6 +817,8 @@ namespace CPSC131
 				DoublyLinkedList<T>& operator =(DoublyLinkedList<T>& other)
 				{
 					//	TODO: Your code here
+					clear();
+					
 					
 					return *this;
 				}
@@ -623,8 +836,19 @@ namespace CPSC131
 				bool operator ==(DoublyLinkedList<T>& other)
 				{
 					//	TODO: Your code here
-					
-					return false;
+					while(iter ! = end())
+					{
+						if(iter->getElement() != other.head_->getElement())
+						{
+							return false;
+						}
+						else
+						{
+							++iter;
+							other.head_ = other.head_->getNext();
+						}
+					}
+					return true;
 				}
 				
 				/**
@@ -637,8 +861,10 @@ namespace CPSC131
 				bool operator !=(DoublyLinkedList<T>& other)
 				{
 					//	TODO: Your code here
-					
+					if ( this == other)
 					return false;
+					else
+					return true;
 				}
 				
 			private:
