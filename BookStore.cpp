@@ -60,18 +60,18 @@ namespace CPSC131::BookStore
 		//	TODO: Your code here
 		DoublyLinkedList::DoublyLinkedList<Book>::Iterator iter;
 		
-		while(iter.cursor_!= nullptr)
+		while(iter.getCursor() != nullptr)
 		{
-			if(iter.cursor_->getElement().isbn == isbn)
+			if(iter.getCursor()->getElement().getIsbn() == isbn)
 			{
 			return iter;
 			}
 			++iter;
 		}
-		else
-		{
+		//else
+		//
 		return this->bookList.end();
-		}
+		//
 	}
 	
 	/**
@@ -101,13 +101,14 @@ namespace CPSC131::BookStore
 	size_t BookStore::getBookStockAvailable(std::string isbn) const
 	{
 		//	TODO: Your code here
+		DoublyLinkedList::DoublyLinkedList<Book>::Iterator iter;
 		if(BookStore::bookExists(isbn))
 			{
-				for(size_t = i; i<this->bookList.size_, ++i)
+				for(size_t i = 0; i<this->bookList.size(); ++i)
 				{
 					iter++;
 				}
-				return (iter.cursor_->getElement()).quantity;
+				return (iter.getCursor()->getElement().getStockAvailable());
 			}
 		else
 		{
@@ -126,17 +127,17 @@ namespace CPSC131::BookStore
 		DoublyLinkedList::DoublyLinkedList<Book>::Iterator iter;
 		if(BookStore::bookExists(isbn))
 			{
-				for(size_t i = 0; i<this->bookList.size_, ++i)
+				for(size_t i = 0; i<this->bookList.size(); ++i)
 				{
 					++iter;
 				}
-				return (iter.cursor_)->getElement();
+				return (iter.getCursor())->getElement();
 			}
 		else
 		{
-		throw std::range_error;
+		throw std::range_error "range" ;
 		}
-		//return *(new Book());
+		return *(new Book());
 	}
 	
 	
@@ -148,7 +149,7 @@ namespace CPSC131::BookStore
 		
 		while(iter.cursor_!= nullptr)
 		{
-			if(iter.cursor_->getElement() == book)
+			if(iter.getCursor->getElement() == book)
 			{
 			return iter;
 			}
@@ -167,7 +168,7 @@ namespace CPSC131::BookStore
 		DoublyLinkedList::DoublyLinkedList<Book>::Iterator iter;
 		if(BookStore::bookExists(isbn))
 			{
-				for(size_t i = 0; i<this->bookList.size_, ++i)
+				for(size_t i = 0; i<this->bookList.size(); ++i)
 				{
 					++iter;
 				}
@@ -177,7 +178,7 @@ namespace CPSC131::BookStore
 		{
 		throw std::range_error;
 		}
-		//return *(new Book());
+		return *(new Book());
 	}
 	//////////////////////////////////
 	/**
@@ -194,7 +195,7 @@ namespace CPSC131::BookStore
 	{
 		//	TODO: Your code here
 		this->bookList.push_back(book);
-		this->bookList.size_ = this->bookList.size_ + 1;
+		this->bookList.size() = this->bookList.size() + 1;
 	}
 	
 	/**
@@ -213,7 +214,7 @@ namespace CPSC131::BookStore
 	)
 	{
 		//	TODO: Your code here
-		this->bookList.push_back(book(title, author, isbn, price_cents, unit_count);
+		this->bookList.push_back(Book(title, author, isbn, price_cents, unit_count));
 	}
 	
 	/**
@@ -231,8 +232,8 @@ namespace CPSC131::BookStore
 	{
 		//	TODO: Your code here
 		std::cout<<"*** Book Store Inventory ***"<<std::endl;
-		std::cout<<""Book1", by Author1 [123] (5 in stock)"<<std::endl;
-		std::cout<<""Book1", by Author1 [123] (5 in stock)"<<std::endl;
+		std::cout<<"Book1"<<std::endl;
+		std::cout<<"Book2"<<std::endl;
 	}
 	
 	/**
@@ -248,7 +249,7 @@ namespace CPSC131::BookStore
 	void BookStore::sellToCustomer(std::string isbn, size_t price_cents, size_t quantity)
 	{
 		//	TODO: Your code here
-		this->bookList.size_ -= quantiy;
+		this->bookList.size() -= quantity;
 		this->account_balance_ -= price_cents;
 	}
 	
@@ -265,13 +266,13 @@ namespace CPSC131::BookStore
 	void BookStore::sellToCustomer(Book& book, size_t price_cents, size_t quantity)
 	{
 		//	TODO: Your code here
-		if(quantity > (this->getBook(book)).quantity)
+		if(quantity > (this->getBookStockAvailable(book.getIsbn()) ))
 		{
 			throw std::range_error;
 		}
 		else
 		{
-			this->getBook(book).quantity -= quantiy;
+			this->getBookStockAvailable(book.getIsbn()) -= quantity;
 			this->account_balance_-= price_cents;
 		}
 	}
