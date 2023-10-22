@@ -35,15 +35,18 @@ string getLine();
 //	Globals: Not a great practice, but very good for a lazy professor making starter code :)
 BookStore store;
 
-
 //
 int main()
 {
 	//
-	menuLoop();
+	//menuLoop();
+	//cout << "Program exiting" << endl;
+	CPSC131::DoublyLinkedList::DoublyLinkedList<int> list;
+	list.push_back(1);
+	list.push_back(2);
 	
-	//
-	cout << "Program exiting" << endl;
+	cout<<list.front()<<endl;
+	cout<<list.back()<<endl;
 	
 	return 0;
 }

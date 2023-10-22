@@ -62,48 +62,51 @@ namespace CPSC131
 						Node() : prev_(nullptr), next_(nullptr) {}
 						Node(T element)
 						{
-							 prev_ = nullptr;
-							 next_ = nullptr;
-							 element_ = element;
+							 this->prev_ = nullptr;
+							 this->next_ = nullptr;
+							 this->element_ = element;
 						}
 						Node(T element, Node* prev, Node* next) 
 						{
-							prev_ = prev;
-							next_ = next;
-							element_ = element;
+							this->prev_ = prev;
+							this->next_ = next;
+							this->element_ = element;
 						}
 						
 						/// Set the pointer to the previous element
 						void setPrevious(Node* prev)
 						{
-							prev_ = prev;
+							this->prev_ = prev;
 						}
 						
 						/// Set the pointer to the previous element
 						void setPrev(Node* prev)
 						{
-							prev_ = prev;
+							this->prev_ = prev;
 						}
 						
 						/// Get a pointer to the previous element
-						Node* getPrevious() { return prev_; }
+						Node* getPrevious() { return this->prev_; }
 						
 						/// Get a pointer to the previous element
-						Node* getPrev() { return prev_; }
+						Node* getPrev() { return this->prev_; }
 						
 						/// Set the pointer to the next node
 						void setNext(Node* next)
 						{
-							next_ = next;
+							this->next_ = next;
 						}
 						
 						/// Get a pointer to the next node
-						Node* getNext() { return next_; }
+						Node* getNext()
+						{ 	
+							return this->next_;
+						}
 						
 						/// Set the element this node holds
 						void setElement(T element) 
 						{
-							element_ = element;
+							this->element_ = element;
 						}
 						
 						/// Get the element this node holds
@@ -160,8 +163,14 @@ namespace CPSC131
 						Node* end()
 						{
 							//	TODO: Your code here
-							
+							if(this->tail_ != nullptr)
+							{
 							return this->tail_->getNext();
+							}
+							else
+							{
+								return nullptr;
+							}
 						}
 						
 						///	Get the node to which this iterator is currently pointing
@@ -386,9 +395,10 @@ namespace CPSC131
 				DoublyLinkedList(DoublyLinkedList& other)
 				{
 					//	TODO: Your code here
+					
 					this->head_ = other.head_;
 					this->tail_ = other.tail_;
-					this->size_ = 0;
+					this->size_ = other.size();
 				}
 				
 				/// DTOR
@@ -709,15 +719,34 @@ namespace CPSC131
 				Iterator push_back(const T& value)
 				{
 					//	TODO: Your code here
-						this->tail_->setNext(new Node(value));
+					if(this->tail_ == nullptr)
+					{
 						Iterator temp;
+						
+						this->head_= new Node(value);
+						this->tail_= this->head_;
+						
+						
 						temp.cursor_= this->tail_;
-						this->tail_ = this->tail_->getNext();
-						this->tail_->setNext(nullptr);
-						this->tail_->setPrev(temp.cursor_);
+						
 						++size_;
-						return ++temp;
-					//return Iterator();
+					    return temp;
+					}
+					
+					else
+					{
+						Node* temp1 = new Node(value);
+						this->tail_->setNext(temp1);
+						temp1->setPrev(this->tail_);
+						temp1->setNext(nullptr);
+						this->tail_ = temp1;
+
+						Iterator temp(this->head_, this->tail_, temp1);
+						//++size_;
+						return temp;
+						
+					}
+					
 				}
 				
 				/**
@@ -728,6 +757,12 @@ namespace CPSC131
 				void pop_front()
 				{
 					//	TODO: Your code here
+					
+						if(this->size() == 0)
+						{
+							throw std::range_error ("Size 0");
+						}
+						
 						Node* temp = head_;
 					
 						this->head_ = this->head_->getNext();
@@ -750,6 +785,11 @@ namespace CPSC131
 				void pop_back()
 				{
 					//	TODO: Your code here
+						if(this->size() == 0)
+						{
+							throw std::range_error ("Size 0");
+						}
+						
 						Node* temp = this->tail_;
 						
 						this->tail_ = this->tail_->getPrev();
@@ -769,7 +809,14 @@ namespace CPSC131
 				T& front()
 				{
 					//	TODO: Your code here
+					if(this->size() == 0)
+						{
+							throw std::range_error ("Size 0");
+						}
+					else
+					{
 					return this->head_->getElement();
+					}
 					//return *(new T());
 				}
 				
@@ -781,7 +828,14 @@ namespace CPSC131
 				T& back()
 				{
 					//	TODO: Your code here
+					if(this->size() == 0)
+					{
+							throw std::range_error ("Size 0");
+					}
+					else
+					{
 					return this->tail_->getElement();
+					}
 					//return *(new T());
 				}
 				
@@ -793,14 +847,24 @@ namespace CPSC131
 				T& at(size_t index)
 				{
 					//	TODO: Your code here
+					
 					Iterator iter(this->head_, this->tail_, this->head_);
 					
+					if( index>=size_)
+					{
+						throw std::range_error ("Out of bound");
+					}
+					
+					else
+					{
+						
 					for (size_t i = 0; i<index; ++i)
 					{
 						iter.cursor_ = iter.cursor_->getNext();
 					}
-					
 					return iter.cursor_->getElement();
+					
+					}
 					
 					//return *(new T());
 				}
