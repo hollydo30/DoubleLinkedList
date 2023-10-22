@@ -62,6 +62,8 @@ namespace CPSC131
 						Node() : prev_(nullptr), next_(nullptr) {}
 						Node(T element)
 						{
+							 prev_ = nullptr;
+							 next_ = nullptr;
 							 element_ = element;
 						}
 						Node(T element, Node* prev, Node* next) 
@@ -313,7 +315,7 @@ namespace CPSC131
 							{
 								for (int i = add; i<0; ++i)
 								{
-								this->cursor_ = this->cursor_->getNext();
+								this->cursor_ = this->cursor_->getPrev();
 								}
 							}
 							
@@ -337,7 +339,7 @@ namespace CPSC131
 							{
 								for (int i = subtract; i<0; ++i)
 								{
-								this->cursor_ = this->cursor_->getPrev();
+								this->cursor_ = this->cursor_->getNext();
 								}
 							}
 							return *this;
@@ -411,7 +413,7 @@ namespace CPSC131
 				void assign(size_t count, const T& value)
 				{
 					//	TODO: Your code here
-					clear();
+					//clear();
 					this->size_ = count;
 					while (count!=0)
 					{
@@ -420,6 +422,7 @@ namespace CPSC131
 						current.cursor_ = current.cursor_->getNext();
 						--count;
 					}
+					this->tail_ = current.cursor_;
 				}
 				
 				/**
@@ -441,8 +444,15 @@ namespace CPSC131
 				void assign(Iterator first, Iterator last)
 				{
 					//	TODO: Your code here
-					clear();
+					//clear();
+					
 					Iterator current(this->head_, this->tail_, this->head_);
+					
+		
+						//this->head_=new Node(value);
+						//this->tail_=this->head_;
+						//this->size_= 1;
+						
 					
 					while (first.cursor_ != last.cursor_)
 					{
@@ -450,6 +460,8 @@ namespace CPSC131
 					current.cursor_ = (current.cursor_)->getNext();
 					first.cursor_ = (first.cursor_)->getNext();
 					}
+					
+					
 				}
 				
 				/// Return a pointer to the head node, if any
@@ -617,10 +629,16 @@ namespace CPSC131
 				{
 					//	TODO: Your code here
 					Iterator iter;
+					
+					iter.head_ = this->head_;
+					iter.tail_ = this->tail_;
+					iter.cursor_ = this->head_;
+					
 					for (size_t i = 0; i<pos; ++i)
 					{
 					iter.cursor_ = iter.cursor_->getNext();
 					}
+					
 					insert_after(iter, value);
 					
 					return iter;
@@ -646,6 +664,7 @@ namespace CPSC131
 					delete pos.cursor_;
 					pos.cursor_ = nullptr;
 					return iter2;
+					
 					//return Iterator();
 				}
 				
@@ -658,7 +677,7 @@ namespace CPSC131
 				{
 					//	TODO: Your code here
 					Iterator iter(pos.head_, pos.tail_, pos.cursor_);
-					size_t pos2;
+					size_t pos2 = 0;
 					while(iter.cursor_ != nullptr)
 					{
 						++pos2;
@@ -804,8 +823,7 @@ namespace CPSC131
 					list2.size_ = this->size_;
 					while (iter.cursor_!= nullptr)
 					{
-						list2.head_->setElement(iter.cursor_->getElement());
-						list2.head_ = list2.head_->getNext();
+						list2.push_front(iter.cursor_->getElement());
 						iter.cursor_ = iter.cursor_->getNext();
 					}
 				}
@@ -842,9 +860,14 @@ namespace CPSC131
 				{
 					//	TODO: Your code here
 					clear();
-					this->head_ = other.head_;
-					this->tail_ = other.tail_;
-					this->size_ = other.size_;
+					
+					Iterator iter(other.head_, other.tail_, other.head_);
+					this->size_ = other.size();
+					while (iter.cursor_!= nullptr)
+					{
+						this->push_front(iter.cursor_->getElement());
+						iter.cursor_ = iter.cursor_->getNext();
+					}
 					
 					return *this;
 				}
@@ -869,11 +892,8 @@ namespace CPSC131
 						{
 							return false;
 						}
-						else
-						{
 							iter.cursor_ = iter.cursor_->getNext();
 							other.head_ = other.head_->getNext();
-						}
 					}
 					return true;
 				}
