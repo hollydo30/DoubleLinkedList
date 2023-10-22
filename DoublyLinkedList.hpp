@@ -414,10 +414,10 @@ namespace CPSC131
 				{
 					//	TODO: Your code here
 					//clear();
+					Iterator current(this->head_, this->tail_, this->head_);
 					this->size_ = count;
 					while (count!=0)
 					{
-						Iterator current(this->head_, this->tail_, this->head_);
 						current.cursor_->setElement(value);
 						current.cursor_ = current.cursor_->getNext();
 						--count;
