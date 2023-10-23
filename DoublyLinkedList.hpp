@@ -285,12 +285,15 @@ namespace CPSC131
 						Iterator operator +=(size_t add)
 						{
 							//	TODO: Your code here
+							/*
 							for (size_t i = 0; i<add; ++i)
 							{
 								this->cursor_ = this->cursor_->getNext();
 							}
 							
 							return *this;
+							*/
+							return Iterator();
 						}
 						/**
 						 * SubtractionAssignment operator
@@ -299,12 +302,15 @@ namespace CPSC131
 						Iterator operator -=(size_t add)
 						{
 							//	TODO: Your code here
+							/*
 							for (size_t i = 0; i<add; ++i)
 							{
 								this->cursor_ = this->cursor_->getPrev();
 							}
 							
 							return *this;
+							*/
+								return Iterator();
 						}
 						
 						/**
@@ -313,6 +319,7 @@ namespace CPSC131
 						Iterator operator +=(int add)
 						{
 							//	TODO: Your code here
+							/*
 							if (add>=0)
 							{
 								for (int i = 0; i<add; ++i)
@@ -329,6 +336,8 @@ namespace CPSC131
 							}
 							
 							return *this;
+							*/
+							return Iterator();
 						}
 						
 						/**
@@ -337,6 +346,7 @@ namespace CPSC131
 						Iterator operator -=(int subtract)
 						{
 							//	TODO: Your code here
+							/*
 							if (subtract>=0)
 							{
 								for (int i = 0; i<subtract; ++i)
@@ -351,7 +361,10 @@ namespace CPSC131
 								this->cursor_ = this->cursor_->getNext();
 								}
 							}
+							
 							return *this;
+							*/
+							return Iterator();
 						}
 						
 						/**
@@ -1018,21 +1031,27 @@ namespace CPSC131
 				{
 					//	TODO: Your code here
 					
-					/*
 					Iterator iter (this->head_, this->tail_, this->head_);
 					
-					while(iter.cursor_ != nullptr && other.head_ != nullptr)
+					if( this->size_ != other.size() )
+					{return false;}
+					
+					else
 					{
-						if(iter.cursor_->getElement() != other.head_->getElement())
+					
+					/*while(iter.cursor_ != nullptr && other.head_ != nullptr)
+					{
+						if( (iter.cursor_)->getElement() != (other.head_)->getElement() )
 						{
 							return false;
 						}
 							iter.cursor_ = iter.cursor_->getNext();
 							other.head_ = other.head_->getNext();
 					}
-					
-					 */
+					*/
 					return true;
+					
+					}
 				}
 				
 				
@@ -1046,7 +1065,7 @@ namespace CPSC131
 				bool operator !=(DoublyLinkedList<T>& other)
 				{
 					//	TODO: Your code here
-					/*
+					
 					if (*this == other)
 					{
 					return false;
@@ -1056,8 +1075,8 @@ namespace CPSC131
 					return true;
 					}
 					
-					*/
-					return true;
+					
+					//return true;
 				}
 				
 			private:
