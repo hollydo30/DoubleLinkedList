@@ -44,10 +44,64 @@ int main()
 	CPSC131::DoublyLinkedList::DoublyLinkedList<int> list;
 	list.push_back(1);
 	list.push_back(2);
+	list.push_back(3);
+	list.push_back(4);
+	list.push_back(5);
+	list.push_back(6);
 	
-	cout<<list.front()<<endl;
-	cout<<list.back()<<endl;
+	cout<<list.at(0)<<endl;
+	cout<<list.at(1)<<endl;
+	cout<<list.at(2)<<endl;
+	cout<<list.at(3)<<endl;
+	cout<<list.at(4)<<endl;
+	cout<<list.at(5)<<endl;
 	
+	cout<<list.size()<<endl;
+	cout<<endl;
+	 
+	list.pop_back();
+	list.pop_back();
+	
+	cout<<list.at(0)<<endl;
+	cout<<list.at(1)<<endl;
+	cout<<list.at(2)<<endl;
+	cout<<list.at(3)<<endl;
+	
+	cout<<list.size()<<endl;
+	cout<<endl;
+	
+	list.push_front(3);
+	list.push_front(3);
+	
+	
+	cout<<list.at(0)<<endl;
+	cout<<list.at(1)<<endl;
+	cout<<list.at(2)<<endl;
+	cout<<list.at(3)<<endl;
+	cout<<list.at(4)<<endl;
+	cout<<list.at(5)<<endl;
+	
+	cout<<list.size()<<endl;
+	cout<<endl;
+	
+	list.pop_front();
+	list.pop_front();
+	
+	cout<<list.at(0)<<endl;
+	cout<<list.at(1)<<endl;
+	cout<<list.at(2)<<endl;
+	cout<<list.at(3)<<endl;
+	
+	cout<<list.size()<<endl;
+	cout<<endl;
+	
+	list.clear();
+	
+	list.assign(3,1);
+	cout<<list.at(0)<<endl;
+	cout<<list.at(1)<<endl;
+	cout<<list.at(2)<<endl;
+
 	return 0;
 }
 

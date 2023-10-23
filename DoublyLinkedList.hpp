@@ -423,16 +423,14 @@ namespace CPSC131
 				void assign(size_t count, const T& value)
 				{
 					//	TODO: Your code here
-					//clear();
-					Iterator current(this->head_, this->tail_, this->head_);
-					this->size_ = count;
-					while (count!=0)
+					/*clear();
+					while (count>0)
 					{
-						current.cursor_->setElement(value);
-						current.cursor_ = current.cursor_->getNext();
+						this->push_back(value);
 						--count;
+						++size_;
 					}
-					this->tail_ = current.cursor_;
+					*/
 				}
 				
 				/**
@@ -454,23 +452,23 @@ namespace CPSC131
 				void assign(Iterator first, Iterator last)
 				{
 					//	TODO: Your code here
-					//clear();
-					
+					clear();
+					/*
+						this->head_=new Node(first.cursor_->getElement());
+						this->tail_=this->head_;
+						this->size_= 1;
+						
 					Iterator current(this->head_, this->tail_, this->head_);
 					
-		
-						//this->head_=new Node(value);
-						//this->tail_=this->head_;
-						//this->size_= 1;
-						
+					//first.cursor_ = (first.cursor_)->getNext();
 					
 					while (first.cursor_ != last.cursor_)
-					{
-					current.cursor_->setElement(first.cursor_->getElement());
-					current.cursor_ = (current.cursor_)->getNext();
-					first.cursor_ = (first.cursor_)->getNext();
-					}
 					
+					{
+					this->push_back(first.cursor_->getElement());
+					//first.cursor_ = (first.cursor_)->getNext();
+					}
+					*/
 					
 				}
 				
@@ -573,13 +571,13 @@ namespace CPSC131
 				void clear()
 				{
 					//	TODO: Your code here
-						while (this->size_ != 0)
+						while (size_ > 0)
 					{
 						Node* temp = this->head_;
 						this->head_= this->head_->getNext();
 						delete temp;
 						temp = nullptr;
-						--this->size_;
+						--size_;
 					}
 				}
 				
@@ -704,11 +702,32 @@ namespace CPSC131
 				void push_front(const T& value)
 				{
 					//	TODO: Your code here
-						Node* temp = new Node(value);
-						this->head_->setPrev(temp);
-						this->head_ = temp;
-						this->size_++;
+						if(this->head_ == nullptr)
+					{
+						Iterator temp(this->head_, this->tail_, this->head_);
+						
+						this->head_= new Node(value);
+						this->tail_= this->head_;
+						
+						
+						temp.cursor_= this->tail_;
+						
+						++size_;
+					}
 					
+					else
+					{
+						Node* temp1 = new Node(value);
+						this->head_->setPrev(temp1);
+						temp1->setNext(this->head_);
+						temp1->setPrev(nullptr);
+						
+						this->head_ = temp1;
+
+						Iterator temp(this->head_, this->tail_, temp1);
+						
+						this->size_++;
+					}
 				}
 				
 				/**
@@ -721,7 +740,7 @@ namespace CPSC131
 					//	TODO: Your code here
 					if(this->tail_ == nullptr)
 					{
-						Iterator temp;
+						Iterator temp(this->head_, this->tail_, this->head_);
 						
 						this->head_= new Node(value);
 						this->tail_= this->head_;
@@ -730,6 +749,7 @@ namespace CPSC131
 						temp.cursor_= this->tail_;
 						
 						++size_;
+						
 					    return temp;
 					}
 					
@@ -739,14 +759,15 @@ namespace CPSC131
 						this->tail_->setNext(temp1);
 						temp1->setPrev(this->tail_);
 						temp1->setNext(nullptr);
+						
 						this->tail_ = temp1;
 
 						Iterator temp(this->head_, this->tail_, temp1);
-						//++size_;
-						return temp;
 						
+						this->size_++;
+						
+						return temp;
 					}
-					
 				}
 				
 				/**
@@ -847,8 +868,8 @@ namespace CPSC131
 				T& at(size_t index)
 				{
 					//	TODO: Your code here
-					
 					Iterator iter(this->head_, this->tail_, this->head_);
+					
 					
 					if( index>=size_)
 					{
@@ -862,6 +883,7 @@ namespace CPSC131
 					{
 						iter.cursor_ = iter.cursor_->getNext();
 					}
+					
 					return iter.cursor_->getElement();
 					
 					}
