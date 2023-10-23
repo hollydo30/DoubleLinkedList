@@ -395,10 +395,12 @@ namespace CPSC131
 				DoublyLinkedList(DoublyLinkedList& other)
 				{
 					//	TODO: Your code here
-					/*clear();
+					//clear();
 					
+					if(other.size() != 0)
+				{
 					Iterator iter(other.head_, other.tail_, other.head_);
-					this->size_ = other.size();
+					//this->size_ = other.size();
 					
 					while (iter.cursor_!= nullptr)
 					{
@@ -406,7 +408,9 @@ namespace CPSC131
 						iter.cursor_ = iter.cursor_->getNext();
 					}
 					
+				}
 					
+					/*
 					this->head_ = other.head_;
 					this->tail_ = other.tail_;
 					this->size_ = other.size();
@@ -974,15 +978,27 @@ namespace CPSC131
 				DoublyLinkedList<T>& operator =(DoublyLinkedList<T>& other)
 				{
 					//	TODO: Your code here
-					clear();
+					/*clear();
 					
-					/*Iterator iter(other.head_, other.tail_, other.head_);
+					Iterator iter(other.head_, other.tail_, other.head_);
+					
+					if(other.size() == 0)
+					{
+						return &this;
+					}
+					
+					else
+					{
+						
 					this->size_ = other.size();
 					
-					while (iter.cursor_!= nullptr)
+					while (iter.cursor_ != nullptr)
 					{
-						this->push_back(iter.cursor_->getElement());
-						iter.cursor_ = iter.cursor_->getNext();
+						//this->push_back(iter.cursor_->getElement());
+						//iter.cursor_ = iter.cursor_->getNext();
+					}
+					return &this;
+					
 					}
 					*/
 					return *this;
@@ -1015,9 +1031,10 @@ namespace CPSC131
 							other.head_ = other.head_->getNext();
 					}
 					
-					*/
+					 */
 					return true;
 				}
+				
 				
 				/**
 				 * Return true if the lists are "not equal"
@@ -1038,8 +1055,8 @@ namespace CPSC131
 					{
 					return true;
 					}
-					*/
 					
+					*/
 					return true;
 				}
 				
