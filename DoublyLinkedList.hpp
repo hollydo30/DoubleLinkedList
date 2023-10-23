@@ -600,29 +600,44 @@ namespace CPSC131
 				{
 					//	TODO: Your code here
 					Iterator iter2;
-					if(this->size_==0)
+					
+					
+					if(this->size_ == 0)
 					{
 						this->head_=new Node(value);
 						this->tail_=this->head_;
 						this->size_= 1;
+						
+						iter2.cursor_ = this->head_;
+						iter2.head_ = this->head_;
+						iter2.tail_ = this->head_;
 					}
 					
-					if(pos.cursor_ == nullptr)
-						{
-							this->tail_->setNext(new Node(value));
-							this->tail_ = this->tail_->getNext();
-							this->tail_->setNext(nullptr);
-							++this->size_;
-						}
+					if( this->size_ != 0 && pos.cursor_ == nullptr )
+					{
+						this->push_back(value);
+						
+						iter2.cursor_ = this->tail_;
+						iter2.head_ = this->head_;
+						iter2.tail_ = this->tail_;
+					}
+					
 					else
 					{
-						//Iterator iter2;
 						iter2.cursor_ = pos.cursor_->getNext();
 						pos.cursor_->setNext(new Node(value));
 						pos.cursor_->getNext()->setNext(iter2.cursor_);
+						
+						iter2.cursor_ = pos.cursor_->getNext();
+						iter2.head_ = this->head_;
+						iter2.tail_ = this->tail_;
+						++size_;
 					}
+					
 					return iter2;
+					
 					//return Iterator();
+					
 				}
 				
 				/**
