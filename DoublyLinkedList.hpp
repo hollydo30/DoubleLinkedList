@@ -395,10 +395,22 @@ namespace CPSC131
 				DoublyLinkedList(DoublyLinkedList& other)
 				{
 					//	TODO: Your code here
+					/*clear();
+					
+					Iterator iter(other.head_, other.tail_, other.head_);
+					this->size_ = other.size();
+					
+					while (iter.cursor_!= nullptr)
+					{
+						this->push_back(iter.cursor_->getElement());
+						iter.cursor_ = iter.cursor_->getNext();
+					}
+					
 					
 					this->head_ = other.head_;
 					this->tail_ = other.tail_;
 					this->size_ = other.size();
+					*/
 				}
 				
 				/// DTOR
@@ -964,14 +976,15 @@ namespace CPSC131
 					//	TODO: Your code here
 					clear();
 					
-					Iterator iter(other.head_, other.tail_, other.head_);
+					/*Iterator iter(other.head_, other.tail_, other.head_);
 					this->size_ = other.size();
+					
 					while (iter.cursor_!= nullptr)
 					{
-						this->push_front(iter.cursor_->getElement());
+						this->push_back(iter.cursor_->getElement());
 						iter.cursor_ = iter.cursor_->getNext();
 					}
-					
+					*/
 					return *this;
 				}
 				
@@ -988,8 +1001,11 @@ namespace CPSC131
 				bool operator ==(DoublyLinkedList<T>& other)
 				{
 					//	TODO: Your code here
+					
+					/*
 					Iterator iter (this->head_, this->tail_, this->head_);
-					while(iter.cursor_ != nullptr)
+					
+					while(iter.cursor_ != nullptr && other.head_ != nullptr)
 					{
 						if(iter.cursor_->getElement() != other.head_->getElement())
 						{
@@ -998,6 +1014,8 @@ namespace CPSC131
 							iter.cursor_ = iter.cursor_->getNext();
 							other.head_ = other.head_->getNext();
 					}
+					
+					*/
 					return true;
 				}
 				
@@ -1011,6 +1029,7 @@ namespace CPSC131
 				bool operator !=(DoublyLinkedList<T>& other)
 				{
 					//	TODO: Your code here
+					/*
 					if (*this == other)
 					{
 					return false;
@@ -1019,6 +1038,9 @@ namespace CPSC131
 					{
 					return true;
 					}
+					*/
+					
+					return true;
 				}
 				
 			private:
