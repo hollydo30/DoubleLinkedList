@@ -423,14 +423,13 @@ namespace CPSC131
 				void assign(size_t count, const T& value)
 				{
 					//	TODO: Your code here
-					/*clear();
+					clear();
 					while (count>0)
 					{
 						this->push_back(value);
 						--count;
-						++size_;
 					}
-					*/
+					
 				}
 				
 				/**
@@ -453,22 +452,23 @@ namespace CPSC131
 				{
 					//	TODO: Your code here
 					clear();
-					/*
-						this->head_=new Node(first.cursor_->getElement());
-						this->tail_=this->head_;
-						this->size_= 1;
+					
+						//this->head_=new Node(first.cursor_->getElement());
+						//this->tail_=this->head_;
+						//this->size_= 1;
+					if( first.cursor_ != nullptr)
+					{
 						
 					Iterator current(this->head_, this->tail_, this->head_);
-					
-					//first.cursor_ = (first.cursor_)->getNext();
 					
 					while (first.cursor_ != last.cursor_)
 					
 					{
 					this->push_back(first.cursor_->getElement());
-					//first.cursor_ = (first.cursor_)->getNext();
+					first.cursor_ = (first.cursor_)->getNext();
 					}
-					*/
+					
+					}
 					
 				}
 				
@@ -579,6 +579,8 @@ namespace CPSC131
 						temp = nullptr;
 						--size_;
 					}
+					this->head_ = nullptr;
+					this->tail_ = nullptr;
 				}
 				
 				/**
