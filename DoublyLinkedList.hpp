@@ -285,59 +285,99 @@ namespace CPSC131
 						Iterator operator +=(size_t add)
 						{
 							//	TODO: Your code here
-							/*
-							for (size_t i = 0; i<add; ++i)
+							if (this->cursor_ == nullptr)
 							{
-								this->cursor_ = this->cursor_->getNext();
+								return *this;
 							}
 							
+							else
+							{
+								
+							for (size_t i = 0; i<add; i++)
+							{
+								//++this;
+								if (this->cursor_ != nullptr)
+								{
+								this->cursor_ = this->cursor_->getNext();
+								}
+							}
 							return *this;
-							*/
-							return Iterator();
+							
+							}
+							//return Iterator();
 						}
 						/**
 						 * SubtractionAssignment operator
 						 * Return a copy of the current iterator, after modification
 						 */
-						Iterator operator -=(size_t add)
+						Iterator operator -= (size_t add)
 						{
 							//	TODO: Your code here
-							/*
+								if (this->cursor_ == nullptr)
+							{
+								return *this;
+							}
+							
+								else
+							{
+								
 							for (size_t i = 0; i<add; ++i)
 							{
+								if (this->cursor_ != nullptr)
+								{
 								this->cursor_ = this->cursor_->getPrev();
+								}
 							}
 							
 							return *this;
-							*/
-								return Iterator();
+							
+							}
+								//return Iterator();
 						}
 						
 						/**
 						 * AdditionAssignment operator, supporting positive or negative ints
 						 */
-						Iterator operator +=(int add)
+						Iterator operator += (int add)
 						{
 							//	TODO: Your code here
-							/*
+							
+							if (this->cursor_ == nullptr)
+						{
+								return *this;
+						}
+							
+							else
+							
+						{
+							
 							if (add>=0)
 							{
 								for (int i = 0; i<add; ++i)
 								{
-								this->cursor_ = this->cursor_->getNext();
+									if (this->cursor_ != nullptr)
+									{
+								     this->cursor_ = this->cursor_->getNext();
+									}
 								}
 							}
 							else
-							{
-								for (int i = add; i<0; ++i)
+							{ 
+								for (int i = 0; i<(-add); ++i)
 								{
-								this->cursor_ = this->cursor_->getPrev();
+									if (this->cursor_ != nullptr)
+									{
+									this->cursor_ = this->cursor_->getPrev();
+									}
+								
 								}
 							}
 							
+						}
 							return *this;
-							*/
-							return Iterator();
+							
+							
+							//return Iterator();
 						}
 						
 						/**
@@ -346,25 +386,40 @@ namespace CPSC131
 						Iterator operator -=(int subtract)
 						{
 							//	TODO: Your code here
-							/*
+							
+							if (this->cursor_ == nullptr)
+						{
+								return *this;
+						}
+							else
+						{
+						
 							if (subtract>=0)
 							{
 								for (int i = 0; i<subtract; ++i)
 								{
-								this->cursor_ = this->cursor_->getPrev();
+									
+									if (this->cursor_ != nullptr)
+									{
+								    this->cursor_ = this->cursor_->getPrev();
+								    }
 								}
 							}
 							else
 							{
 								for (int i = subtract; i<0; ++i)
 								{
-								this->cursor_ = this->cursor_->getNext();
+									if (this->cursor_ != nullptr)
+									{
+								     this->cursor_ = this->cursor_->getNext();
+								    }
 								}
 							}
 							
 							return *this;
-							*/
-							return Iterator();
+						}
+						
+							//return Iterator();
 						}
 						
 						/**
@@ -950,6 +1005,7 @@ namespace CPSC131
 				void reverse()
 				{
 					//	TODO: Your code here
+					/*
 					DoublyLinkedList<T> list2;
 					Iterator iter(this->head_, this->tail_, this->head_);
 					list2.size_ = this->size_;
@@ -958,6 +1014,7 @@ namespace CPSC131
 						list2.push_front(iter.cursor_->getElement());
 						iter.cursor_ = iter.cursor_->getNext();
 					}
+					*/
 				}
 				
 				/**
