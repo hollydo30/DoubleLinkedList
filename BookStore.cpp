@@ -36,14 +36,14 @@ namespace CPSC131::BookStore
 	{
 		//	TODO: Your code here
 		
-		if(adjustment >= 0)
-		{
+		//if(adjustment >= 0)
+		//{
 			account_balance_ +=adjustment;
-		}
-		else
-		{
-			account_balance_ -=adjustment;
-		}
+		//}
+		//else
+		//{
+			//account_balance_ -=adjustment;
+		//}
 		
 	}
 	
@@ -223,17 +223,20 @@ namespace CPSC131::BookStore
 			if(bookList.size() == 0)
 	{
 			this->bookList.push_front(book);
+			BookStore::adjustAccountBalance( -(book.getPriceCents()*book.getStockAvailable()) );
 	}
 	else
+
 	{
 		if(bookExists( book.getIsbn() ) )
 		{
-			BookStore::adjustAccountBalance( book.getPriceCents()*book.getStockAvailable() );
+			BookStore::adjustAccountBalance( -(book.getPriceCents()*book.getStockAvailable()) );
 			BookStore::getBook(book.getIsbn()).adjustStockAvailable( book.getStockAvailable() );
 		}
 		else
 		{
 			this->bookList.push_back(book);
+			BookStore::adjustAccountBalance( -(book.getPriceCents()*book.getStockAvailable()) );
 		}
 		
 	}
@@ -281,8 +284,21 @@ namespace CPSC131::BookStore
 	{
 		//	TODO: Your code here
 		std::cout<<"*** Book Store Inventory ***"<<std::endl;
-		std::cout<<"Book1 by Author1 [123] (5 in stock)"<<std::endl;
-		std::cout<<"Book1 by Author1 [123] (5 in stock)"<<std::endl;
+		
+		DoublyLinkedList::DoublyLinkedList<Book>::Iterator iter;
+		iter = this->bookList.begin();
+		
+		while( iter != bookList.end() )
+	{
+		std::cout<<"\""<<iter.getCursor()->getElement().getTitle()<<"\""<<", by "<<iter.getCursor()->getElement().getAuthor()
+		<<" ["<<iter.getCursor()->getElement().getIsbn()<<"] ("<<iter.getCursor()->getElement().getStockAvailable()
+		<<" in stock)"<<std::endl;
+		
+					++iter;
+	}
+				
+		//std::cout<<std::endl;
+		
 	}
 	
 	/**
@@ -308,7 +324,7 @@ namespace CPSC131::BookStore
 	
 			if ( quantity <= ( this->getBookStockAvailable(isbn) ) )
 		{
-			BookStore::adjustAccountBalance( -(price_cents * quantity) );
+			BookStore::adjustAccountBalance( (price_cents * quantity) );
 			BookStore::getBook(isbn).adjustStockAvailable( -(quantity) );
 		}
 		
