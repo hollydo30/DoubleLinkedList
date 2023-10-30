@@ -34,13 +34,14 @@ string getLine();
 
 //	Globals: Not a great practice, but very good for a lazy professor making starter code :)
 BookStore store;
-
+Book book("abc", "bcd", "def", 300);
 //
 int main()
 {
 	//
 	//menuLoop();
 	//cout << "Program exiting" << endl;
+	/*
 	CPSC131::DoublyLinkedList::DoublyLinkedList<int> list;
 	list.push_back(1);
 	list.push_back(2);
@@ -101,6 +102,15 @@ int main()
 	cout<<list.at(0)<<endl;
 	cout<<list.at(1)<<endl;
 	cout<<list.at(2)<<endl;
+*/
+//BookStore store;
+//Book book("abc", "bcd", "def", 300);
+
+
+	store.printInventory();
+	store.adjustAccountBalance(-10000);
+	store.sellToCustomer("123", 30, 2);
+	store.printInventory();
 
 	return 0;
 }

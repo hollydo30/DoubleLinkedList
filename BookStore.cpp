@@ -35,16 +35,16 @@ namespace CPSC131::BookStore
 	void BookStore::adjustAccountBalance(int adjustment)
 	{
 		//	TODO: Your code here
-		/*
-		 * if(adjustment >= 0)
+		
+		if(adjustment >= 0)
 		{
-			this->account_balance_ += adjustment;
+			account_balance_ +=adjustment;
 		}
 		else
 		{
-			this->account_balance_ -= adjustment;
+			account_balance_ -=adjustment;
 		}
-		*/
+		
 	}
 	
 	/**
@@ -53,7 +53,7 @@ namespace CPSC131::BookStore
 	int BookStore::getAccountBalance() const
 	{
 		//	TODO: Your code here
-		return this->account_balance_;
+		return account_balance_;
 		//return 0;
 	}
 	
@@ -67,11 +67,19 @@ namespace CPSC131::BookStore
 	DoublyLinkedList::DoublyLinkedList<Book>::Iterator BookStore::findBook(std::string isbn) const
 	{
 		//	TODO: Your code here
-		/*
+		
 		
 		DoublyLinkedList::DoublyLinkedList<Book>::Iterator iter;
+		iter = this->bookList.begin();
 		
-		while(iter.getCursor() != nullptr)
+		if(bookList.size() == 0)
+	{
+			throw std::range_error ("List is empty 1");
+	}
+	else
+	{
+		
+		while(iter != this->bookList.end() )
 		{
 			if(iter.getCursor()->getElement().getIsbn() == isbn)
 			{
@@ -79,13 +87,11 @@ namespace CPSC131::BookStore
 			}
 			++iter;
 		}
-		//else
-		//
 		return this->bookList.end();
-		//
-		*/
 		
-		return DoublyLinkedList::DoublyLinkedList<Book>::Iterator();
+	}
+		
+		//return DoublyLinkedList::DoublyLinkedList<Book>::Iterator();
 	}
 	
 	/**
@@ -96,8 +102,13 @@ namespace CPSC131::BookStore
 	bool BookStore::bookExists(std::string isbn) const
 	{
 		//	TODO: Your code here
+		if(bookList.size() == 0)
+	{
+			return false;
+	}
+		else
+	{
 		
-		/*
 		if( BookStore::findBook(isbn) == bookList.end())
 		{
 		return false;
@@ -106,9 +117,8 @@ namespace CPSC131::BookStore
 		{
 		return true;
 		}
-		*/
-		
-		return false;
+	}
+		//return false;
 	}
 	
 	/**
@@ -119,23 +129,38 @@ namespace CPSC131::BookStore
 	size_t BookStore::getBookStockAvailable(std::string isbn) const
 	{
 		//	TODO: Your code here
-		/*
+	if(bookList.size() == 0)
+	{
+			return 0;
+	}
+	else
+	{
+		
 		
 		DoublyLinkedList::DoublyLinkedList<Book>::Iterator iter;
+		iter = this->bookList.begin();
+		
+		if(iter.begin() == nullptr)
+	{
+			return 0;
+	}
+	else
+	{
 		if(BookStore::bookExists(isbn))
 			{
-				for(size_t i = 0; i<this->bookList.size(); ++i)
-				{
-					iter++;
-				}
-				return (iter.getCursor()->getElement().getStockAvailable());
+				return getBook(isbn).getStockAvailable();
+				//return (iter.getCursor()->getElement().getStockAvailable());
 			}
 		else
 		{
 		return 0;
 		}
-		*/
-		return 0;
+		
+		
+	}
+	}
+		
+		//return 0;
 	}
 	
 	/**
@@ -146,11 +171,26 @@ namespace CPSC131::BookStore
 	Book& BookStore::getBook(std::string isbn) const
 	{
 		//	TODO: Your code here
-		/*
+		
+	if(bookList.size() == 0)
+	{
+			throw std::range_error ("List is empty4");
+	}
+	else
+	{
+		
 		DoublyLinkedList::DoublyLinkedList<Book>::Iterator iter;
+		iter = this->bookList.begin();
+		
+		if(iter.begin() == nullptr)
+	{
+			return *iter;
+	}
+	else
+	{
 		if(BookStore::bookExists(isbn))
 			{
-				for(size_t i = 0; i<this->bookList.size(); ++i)
+				while (iter.getCursor()->getElement().getIsbn() != isbn)
 				{
 					++iter;
 				}
@@ -160,42 +200,13 @@ namespace CPSC131::BookStore
 		{
 		throw std::range_error ("Book Does Not Exist.");
 		}
-		*/
-		return *(new Book());
-	}
-	
-	
-	//////////////////////////////////
-	
-	/*DoublyLinkedList::DoublyLinkedList<Book>::Iterator BookStore::findBook(Book& book) const
-	{
-		//	TODO: Your code here
-		DoublyLinkedList::DoublyLinkedList<Book>::Iterator iter;
 		
-		while(iter.cursor_!= nullptr)
-		{
-			if(iter.getCursor->getElement() == book)
-			{
-			return iter;
-			}
-			++iter;
-		}
-		else
-		{
-		return this->bookList.end();
-		}
+		//return *(new Book());
 	}
-	*/
+	}
+}
 	
-	/////////////////////////////////
 	
-	/*Book& BookStore::getBook(Book& book) const
-	{
-		BookStore::getBook(book.getIsbn());
-	}	
-	*/
-	 
-	//////////////////////////////////
 	/**
 	 * Take a Book instance and add it to inventory
 	 * 
@@ -209,7 +220,12 @@ namespace CPSC131::BookStore
 	void BookStore::purchaseInventory(const Book& book)
 	{
 		//	TODO: Your code here
-		/*
+			if(bookList.size() == 0)
+	{
+			this->bookList.push_front(book);
+	}
+	else
+	{
 		if(bookExists( book.getIsbn() ) )
 		{
 			BookStore::adjustAccountBalance( book.getPriceCents()*book.getStockAvailable() );
@@ -219,8 +235,9 @@ namespace CPSC131::BookStore
 		{
 			this->bookList.push_back(book);
 		}
-		*/
+		
 	}
+}
 	
 	/**
 	 * Take some book details and add the book to our inventory.
@@ -238,13 +255,17 @@ namespace CPSC131::BookStore
 	)
 	{
 		//	TODO: Your code here
-		
-		/*
+			if(bookList.size() == 0)
+	{
+			throw std::range_error ("List is empty9");
+	}
+	else
+	{
 		Book book(title, author, isbn, price_cents, unit_count);
 		BookStore::purchaseInventory(book);
-		*/
+		
 	}
-	
+}
 	/**
 	 * Print out inventory.
 	 * Should be in a particular way to earn unit test points.
@@ -278,8 +299,27 @@ namespace CPSC131::BookStore
 	{
 		//	TODO: Your code here
 		
-		//BookStore::sellToCustomer (*(BookStore::findBook(isbn)), price_cents, quantity );
+		if(bookExists(isbn) == false)
+	{ 
+		throw std::range_error ("List is empty7");
 	}
+	else
+	{
+	
+			if ( quantity <= ( this->getBookStockAvailable(isbn) ) )
+		{
+			BookStore::adjustAccountBalance( -(price_cents * quantity) );
+			BookStore::getBook(isbn).adjustStockAvailable( -(quantity) );
+		}
+		
+			else
+		{
+			throw std::range_error ("Not Enough To Sell Books");
+		}
+		
+		
+	}
+}
 	
 	/**
 	 * Sell a book to a customer!
@@ -294,19 +334,7 @@ namespace CPSC131::BookStore
 	void BookStore::sellToCustomer(Book& book, size_t price_cents, size_t quantity)
 	{
 		//	TODO: Your code here
-		/*
-		
-			if ( quantity > ( this->getBookStockAvailable(book.getIsbn() ) ) )
-		{
-			throw std::range_error ("Not Enough Books");
-		}
-		else
-		{
-			BookStore::adjustAccountBalance( -(price_cents * quantity) );
-			( BookStore::getBook (book.getIsbn()) ).adjustStockAvailable( -(quantity) );
-		}
-		
-		*/
+		BookStore::sellToCustomer(book.getIsbn(), price_cents, quantity);
 		
 	}
 }
