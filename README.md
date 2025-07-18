@@ -1,6 +1,6 @@
 # Project 2 - Book Store
 
-My submission for CPSC 131, Section 07, Project 2
+Built a C++ doubly linked list from scratch with insert, delete, and search operations, reinforcing pointer logic and list traversal.
 
 # My Information
 
